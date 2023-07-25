@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  angular-app:
+    build:
+      context: ../paybox-ui
+    ports:
+      - '80:80'
+    depends_on:
+      - app-microservice
+      - notification-microservice
+
+  app-microservice:
+    build:
+      context: ./
+      dockerfile: Dockerfile-app
+    ports:
+      - '3000:3000'
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+
+  notification-microservice:
+    build:
+      context: ./
+      dockerfile: Dockerfile-notification
+    ports:
+      - '4000:4000'
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:

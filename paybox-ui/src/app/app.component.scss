@@ -1,0 +1,55 @@
+.card-container {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Adjust as needed */
+  align-items: flex-start; /* Adjust as needed */
+  gap: 10px;
+}
+
+mat-card {
+  width: 300px; /* Adjust as needed */
+}
+
+.toolbar {
+
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: #1976d2;
+  color: white;
+  //font-weight: 600;
+  //margin-bottom: 10px;
+
+  .center {
+    border: 5px solid;
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+  }
+  button{
+    left: 4px;
+  }
+  .title{
+    padding: 10px;
+
+    text-align: center
+  }
+
+}
+
+
+.edit-form {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  mat-form-field + mat-form-field {
+    margin-left: 2px;
+
+  }
+}

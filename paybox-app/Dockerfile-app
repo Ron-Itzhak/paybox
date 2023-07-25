@@ -1,0 +1,7 @@
+FROM node:18-alpine3.14
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
+CMD ["npm","run", "start-app-prod"]
+EXPOSE 3000

@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .        # Path to the directory containing your Node.js app's Dockerfile-app
+      dockerfile: Dockerfile-app    # Replace this with the actual name of your Node.js Dockerfile-app
+    ports:
+      - '3000:3000'     # Map your app's port to host port 3000
+    depends_on:
+      - db
+    environment:
+      MONGODB_URI: mongodb://db:27017/todoapp   # Connection URL to the MongoDB service
+    networks:
+      - app_network
+
+  db:
+    image: mongo:latest    # Use the latest MongoDB image from Docker Hub
+    volumes:
+      - db_data:/data/db   # Use a named volume for persisting MongoDB data
+    ports:
+      - '27017:27017'      # Map host port 27017 to the MongoDB container's port
+    networks:
+      - app_network
+
+volumes:
+  db_data:   # Define the named volume for MongoDB data
+
+networks:
+  app_network:   # Create a custom bridge network for the services to communicate
+    driver: bridge
