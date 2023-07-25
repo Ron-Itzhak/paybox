@@ -7,7 +7,6 @@ import {lastValueFrom} from 'rxjs';
   providedIn: 'root'
 })
 export class RequestService {
-  //baseURL = environment.apiURL;
   baseURL = 'http://localhost:3000';
   constructor(private http: HttpClient) { }
 

@@ -24,11 +24,6 @@ describe('GET /sendNotifications', () => {
     it('should return a 200 status code and an array of todos', async () => {
         const mockTodos = [{ id: 1, title: 'Todo 1', deadline: '2023-07-26' }];
         getTodosWithDeadlineTomorrow.mockResolvedValue(mockTodos)
-        // // Stub the db.getTodosWithDeadlineTomorrow() function to return the mock data
-        // jest.mock('./db', () => ({
-        //     getTodosWithDeadlineTomorrow: jest.fn().mockResolvedValue(mockTodos)
-        // }));
-
         const res = await request(app).get('/sendNotifications');
         expect(res.status).toBe(200);
         expect(res.body).toEqual(mockTodos);

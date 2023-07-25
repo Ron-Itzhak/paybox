@@ -9,7 +9,7 @@
     "start-notification": "nodemon notification.js",
     "start-notification-prod": "node notification.js",
     "start": "start-app && start-notification",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",

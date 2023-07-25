@@ -1,7 +1,7 @@
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const { MongoClient } = require('mongodb');
 const request = require('supertest');
-const app = require('./app'); // Replace './app' with the path to your Express app file
+const app = require('./app');
 require("dotenv").config();
 
 const {
@@ -13,8 +13,6 @@ jest.mock('./db', () => {
         ...actualModule,
         connectDB: jest.fn(),
         insertTodo: jest.fn(),
-        // closeDB: jest.fn(),
-        // getTodosWithDeadlineTomorrow:jest.fn()
     };
 });
 
@@ -32,15 +30,8 @@ beforeAll(async () => {
     db = dbClient.db(dbName);
 });
 
-afterAll(async () => {
-    await dbClient.close();
-    await mongoServer.stop();
-    connectDB.mockResolvedValue(db);
-
-});
 describe('Express App Tests', () => {
     beforeEach(async () => {
-        // Reset the database state before each test
         await db.collection('todos').deleteMany({});
         connectDB.mockResolvedValue(db)
 
@@ -53,7 +44,6 @@ describe('Express App Tests', () => {
     });
 
     it('should create a new todo on POST /todos', async () => {
-        //connectDB.mockResolvedValue(db)
 
         const newTodo = {
             title: 'Test Todo',
@@ -68,7 +58,6 @@ describe('Express App Tests', () => {
     });
 
     it('should retrieve todos on GET /todos', async () => {
-        //connectDB.mockResolvedValue(db)
         const response = await request(app).get('/todos');
         expect(response.status).toBe(200);
         expect(response.body).toHaveLength(0);
@@ -96,11 +85,11 @@ describe('Express App Tests', () => {
     it('should delete a todo on DELETE /todos/:id', async () => {
         const todo = { title: 'Test Todo', content: 'Test Content', deadline: new Date() };
         const response = await request(app).post('/todos').send(todo);
-
-        const deleteResponse = await request(app).delete(`/todos/${response.body.todo_id}`);
+        const id = 124;
+        const deleteResponse = await request(app).delete(`/todos/${id}`);
 
         expect(deleteResponse.status).toBe(200);
-        expect(deleteResponse.body).toBe(`${response.body.todo_id} deleted Successfully`);
+        expect(deleteResponse.body).toBe(`${id} deleted Successfully`);
 
         const getResponse = await request(app).get('/todos');
         expect(getResponse.body).toHaveLength(0);

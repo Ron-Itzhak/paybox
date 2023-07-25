@@ -25,7 +25,6 @@ export class AppComponent implements OnInit {
       editDate: new FormControl()
     });
   }
-  //title = 'paybox-ui';
   todos: Todo[] = [];
   notifications: Todo[] = [];
   editTodoForm: FormGroup;
@@ -52,12 +51,7 @@ export class AppComponent implements OnInit {
     await this.getAllTodos();
   }
 
-  // async editTodo(todo: Todo) {
-  //   await this.requestService.editTodo(todo);
-  //
-  // }
   editTodo(todo: Todo) {
-    // Set isEditing to true for the clicked card and false for others
     this.todos.forEach(t => t.isEditing = t === todo);
     console.log(todo.isEditing)
     console.log(this.todos)
@@ -90,7 +84,6 @@ export class AppComponent implements OnInit {
     if (this.addTodoForm.valid) {
       console.log(this.addTodoForm.value);
       const { addTitle, addContent, addDate } = this.addTodoForm.value;
-      //const date = new Date(editDate).toDateString()
       const todo:Todo = {title:addTitle, content:addContent,deadline:addDate}
       await this.addTodo(todo);
       console.log(addTitle, addContent, addDate)
