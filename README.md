@@ -7,3 +7,7 @@
 
 and then the application can be run in the browser in address: 
 `http://localhost/`
+
+to run tests in the app:
+`cd paybox-app`
+`npm run test`
