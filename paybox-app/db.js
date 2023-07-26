@@ -20,7 +20,7 @@ async function connectDB() {
 
 function getDB() {
     if (!dbClient) {
-        throw new Error('Database not connected');
+       throw new Error('Database not connected');
     }
     return dbClient.db(dbName);
 }
@@ -33,46 +33,8 @@ function closeDB() {
     }
 }
 
-
-async function increaseId(db) {
-    const settingsCollection = db.collection('todos-settings');
-    const result = await settingsCollection.findOneAndUpdate(
-        {},
-        {$inc: {todo_id: 1}},
-        {upsert: true, returnOriginal: false}
-    );
-
-    return result.value ? result.value.todo_id : 1;
-}
-
-async function insertTodo(todo) {
-    const database = await connectDB();
-    const todo_id = await increaseId(database);
-    const todoWithId = {...todo, todo_id};
-
-    const todosCollection = database.collection('todos');
-    return await todosCollection.insertOne(todoWithId);
-}
-
-async function getTodosWithDeadlineTomorrow() {
-    const database = await connectDB();
-    const todosCollection = database.collection('todos');
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(0, 0, 0, 0);
-    const endOfTomorrow = new Date(tomorrow);
-    endOfTomorrow.setDate(tomorrow.getDate() + 1);
-    const query = { deadline: { $gte: today, $lt: endOfTomorrow } };
-
-    return await todosCollection.find(query).toArray();
-}
-
 module.exports = {
     connectDB,
-    insertTodo,
-    increaseId,
-    getTodosWithDeadlineTomorrow,
     getDB,
     closeDB,
 };

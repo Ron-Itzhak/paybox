@@ -2,7 +2,7 @@
   "name": "paybox",
   "version": "1.0.0",
   "description": "test",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start-app": "nodemon app.js",
     "start-app-prod": "node app.js",
