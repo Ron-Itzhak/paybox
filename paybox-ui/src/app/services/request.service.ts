@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Todo} from '../todo';
 import {lastValueFrom} from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RequestService {
-  baseURL = 'http://localhost:3000';
+  baseURL = environment.appURL;
   constructor(private http: HttpClient) { }
 
 
